@@ -1,3 +1,4 @@
+// context/color-context.tsx
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
@@ -8,24 +9,23 @@ type ColorContextType = {
   setColorScheme: (scheme: ColorScheme) => void;
 };
 
+const defaultColorScheme: ColorScheme = 'midnightPurple'; // Ensure consistent default
+
 const ColorContext = createContext<ColorContextType>({
-  colorScheme: 'midnightPurple',
-  setColorScheme: () => {}
+  colorScheme: defaultColorScheme,
+  setColorScheme: () => {},
 });
 
-// Move validation function outside component
-const isValidColorScheme = (scheme: string | null): scheme is ColorScheme => {
-  return !!scheme && Object.keys(colorConfig).includes(scheme);
-};
-
 export function ColorProvider({ children }: { children: React.ReactNode }) {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = window.localStorage.getItem('colorScheme');
-      return isValidColorScheme(saved) ? saved : 'midnightPurple';
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(defaultColorScheme);
+
+  useEffect(() => {
+    // Client-side logic (e.g., load from localStorage)
+    const saved = localStorage.getItem('colorScheme');
+    if (saved && Object.keys(colorConfig).includes(saved)) {
+      setColorScheme(saved as ColorScheme);
     }
-    return 'midnightPurple';
-  });
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('colorScheme', colorScheme);
