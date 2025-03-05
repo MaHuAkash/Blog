@@ -1,15 +1,15 @@
 'use client';
 
-import { useColor } from '@/context/color-context';
-import { colorConfig } from '@/config/colors';
+//import { useColor } from '@/context/color-context';
+//import { colorConfig } from '@/config/colors';
 
-export default function Home() {
-  const { colorScheme } = useColor();
-  const colors = colorConfig[colorScheme];
+//export default function Home() {
+ // const { colorScheme } = useColor();
+ // const colors = colorConfig[colorScheme];
 
-  return (
-    <div className={`grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gradient-to-b ${colors.gradient}`}>
-     <h1>Hello World </h1>
-     </div>
-  );
-}
+ // return (
+  //  <div className={`grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gradient-to-b ${colors.gradient}`}>
+     //<h1>Hello World </h1>
+    // </div>
+  //);
+//}

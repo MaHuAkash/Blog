@@ -7,6 +7,14 @@ import { useEffect, useState } from 'react';
 import { colorConfig } from '@/config/colors';
 import './globals.css';
 import { ModernPreloader } from '@/components/Preloader';
+import { FloatingNav } from '@/components/floatingNav';
+import { AnimatePresence, motion } from 'framer-motion';
+
+const navItems = [
+  { name: 'Home', link: '/', icon: <span>🏠</span> },
+  { name: 'Blog', link: '/blog', icon: <span>📝</span> },
+  { name: 'About', link: '/about', icon: <span>👤</span> },
+];
 
 function BodyWrapper({ children }: { children: React.ReactNode }) {
   const { colorScheme } = useColor();
@@ -27,25 +35,39 @@ export default function RootLayout({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const handleLoad = () => setLoading(false);
+    
+    if (document.readyState === 'complete') {
       setLoading(false);
-    }, 3000); // Adjust the time as needed
-
-    return () => clearTimeout(timer);
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
   }, []);
 
   return (
     <html lang="en">
       <body className="transition-colors duration-300">
-        {loading && <ModernPreloader />}
-        <ColorProvider>
-          <BodyWrapper>
-            <main className="relative">
-              {children}
-              <ColorPicker />
-            </main>
-          </BodyWrapper>
-        </ColorProvider>
+        <AnimatePresence mode='wait'>
+          {loading ? (
+            <ModernPreloader />
+          ) : (
+            <ColorProvider>
+              <BodyWrapper>
+                <motion.main
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="relative"
+                >
+                  <FloatingNav navItems={navItems} />
+                  {children}
+                  <ColorPicker />
+                </motion.main>
+              </BodyWrapper>
+            </ColorProvider>
+          )}
+        </AnimatePresence>
       </body>
     </html>
   );
