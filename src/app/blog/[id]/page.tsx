@@ -1,7 +1,7 @@
-import BlogDetail from '@/components/blogdetail';
+import BlogDetail from '@/components/blog/blogdetail';
 import { Post } from '@/types';
+import { notFound } from 'next/navigation';
 
-// Mock data for now (replace with API call later)
 const mockPosts: Post[] = [
   {
     id: '1',
@@ -10,7 +10,11 @@ const mockPosts: Post[] = [
     content: 'This is the full content of the first blog post.',
     readTime: "6 min read",
     category: 'gmu',
-    date: ''
+    date: '2024-01-01',
+    author: 'Kry',
+    slug: 'first-blog-post',
+    image: '/images/first-blog-post.jpg',
+  
   },
   {
     id: '2',
@@ -19,7 +23,11 @@ const mockPosts: Post[] = [
     content: 'This is the full content of the second blog post.',
     readTime: "6 min read",
     category: 'tipu',
-    date: ''
+    date: '2024-02-01',
+    author: 'hehe',
+    slug: 'first-blog-post',
+    image: '/images/first-blog-post.jpg',
+  
   },
   {
     id: '3',
@@ -28,20 +36,43 @@ const mockPosts: Post[] = [
     content: 'This is the full content of the 3rd blog post.',
     readTime: "6 min read",
     category: 'land',
-    date: ''
+    date: '2024-03-01',
+    author: 'kryanshi',
+    slug: 'first-blog-post',
+    image: '/images/first-blog-post.jpg',
+  
   },
 ];
 
-export default function BlogDetailPage({ params }: { params: { id: string } }) {
-  const post = mockPosts.find((post) => post.id === params.id);
 
-  if (!post) {
-    return <div>Post not found</div>;
-  }
+// Simulate proper async data fetching
+async function getPost(id: string): Promise<Post> {
+  // Return a promise that immediately resolves with mock data
+  return Promise.resolve().then(() => {
+    const post = mockPosts.find(post => post.id === id);
+    if (!post) throw new Error('Post not found');
+    return post;
+  });
+}
+
+export async function generateStaticParams() {
+  return mockPosts.map(post => ({ id: post.id }));
+}
+
+export default async function BlogDetailPage({
+  params
+}: {
+  params: { id: string }
+}) {
+  const post = await getPost(params.id);
 
   return (
-    <div>
+    <main className="container mx-auto px-4 py-8">
       <BlogDetail post={post} />
-    </div>
+    </main>
   );
 }
+
+// Add this export to handle static generation properly
+export const dynamicParams = false;
+

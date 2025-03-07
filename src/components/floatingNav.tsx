@@ -24,11 +24,13 @@ export const FloatingNav = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -10 }}
+      initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       className={cn(
-        "sticky top-[4%] z-[5000] mx-auto flex max-w-fit rounded-lg shadow-xl backdrop-blur-xl",
+        "fixed top-6 left-1/2 -translate-x-1/2 z-[5000]", // Changed to fixed positioning
+        "max-w-[90vw] w-fit rounded-lg shadow-xl backdrop-blur-xl",
+        "transform-gpu", // Better performance for animations
         className
       )}
       style={{
@@ -36,7 +38,7 @@ export const FloatingNav = ({
         border: `1px solid ${colors.border}`
       }}
     >
-      <nav className="flex items-center justify-between px-6 py-3 space-x-6">
+      <nav className="flex items-center px-4 py-2 gap-2 sm:gap-4">
         {navItems.map((navItem, idx) => {
           const isActive = pathname === navItem.link;
           return (
@@ -44,14 +46,15 @@ export const FloatingNav = ({
               key={`link=${idx}`}
               href={navItem.link}
               className={cn(
-                "relative flex items-center space-x-2 p-2",
-                "transition-all duration-300 text-white/90 hover:text-white"
+                "relative flex items-center p-2 sm:p-3",
+                "transition-all duration-300 text-white/90 hover:text-white",
+                "text-sm sm:text-base" // Responsive text sizing
               )}
             >
-              <span className="block sm:hidden text-lg">
+              <span className="sm:hidden text-lg">
                 {navItem.icon}
               </span>
-              <span className="hidden text-sm sm:block font-semibold tracking-tight">
+              <span className="hidden sm:block font-medium tracking-tight">
                 {navItem.name}
               </span>
               {isActive && (
@@ -66,16 +69,18 @@ export const FloatingNav = ({
         })}
         <motion.button 
           whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className={cn(
-            "relative px-6 py-2 text-sm font-semibold rounded-md text-white",
+            "relative px-4 py-2 sm:px-6 sm:py-2 text-sm font-medium rounded-md text-white",
             "backdrop-blur-lg border transition-all",
+            "ml-2", // Add some separation from nav items
             colors.border
           )}
           style={{
             background: `${colors.headerBg}80`
           }}
         >
-          <span>Login</span>
+          <span className="whitespace-nowrap">Login</span>
           <span 
             className="absolute inset-x-0 w-full h-px mx-auto -bottom-px"
             style={{

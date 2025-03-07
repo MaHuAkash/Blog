@@ -118,3 +118,5 @@ export const colorConfig = {
     footerLink: 'text-cyan-200 hover:text-amber-300' // Changed to amber
   }
 } as const;
+
+

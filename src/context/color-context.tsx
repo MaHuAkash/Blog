@@ -9,7 +9,7 @@ type ColorContextType = {
   setColorScheme: (scheme: ColorScheme) => void;
 };
 
-const defaultColorScheme: ColorScheme = 'midnightPurple'; // Ensure consistent default
+const defaultColorScheme: ColorScheme = 'sapphireBlue'; // Ensure consistent default
 
 const ColorContext = createContext<ColorContextType>({
   colorScheme: defaultColorScheme,

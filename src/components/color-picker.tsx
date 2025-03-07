@@ -79,7 +79,6 @@ export function ColorPicker() {
                         colorScheme === color ? 'ring-4 ring-white animate-pulse' : 'ring-2 ring-transparent'
                       } ${colorToClass[color]}`}
                     >
-                      <span className="text-xs">{color}</span>
                     </motion.button>
                   ))}
                 </div>

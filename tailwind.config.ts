@@ -15,7 +15,19 @@ const config: Config = {
         red: { 500: '#ef4444' },
         blue: { 500: '#3b82f6' },
         cyan: { 500: '#06b6d4' }
-      }
+      }, 
+      transitionProperty: {
+        'shadow': 'box-shadow'
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.3s ease-in',
+      },
+      screens: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+      },
     },
   },
   plugins: [],
