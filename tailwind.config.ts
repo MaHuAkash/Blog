@@ -19,6 +19,7 @@ const config: Config = {
       transitionProperty: {
         'shadow': 'box-shadow'
       },
+      
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in',
       },

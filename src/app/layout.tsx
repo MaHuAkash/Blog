@@ -2,18 +2,20 @@
 'use client';
 
 import { ColorProvider, useColor } from '@/context/color-context';
-import { ColorPicker } from '@/components/color-picker';
+import { AudioProvider } from '@/context/audio-context';
+import { ColorPicker } from '@/components/ui/color-picker';
 import { useEffect, useState } from 'react';
 import { colorConfig } from '@/config/colors';
 import './globals.css';
-import { ModernPreloader } from '@/components/Preloader';
-import { FloatingNav } from '@/components/floatingNav';
+import { ModernPreloader } from '@/components/ui/Preloader';
+import { FloatingNav } from '@/components/ui/floatingNav';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const navItems = [
-  { name: 'Home', link: '/', icon: <span>🏠</span> },
+  { name: 'About', link: '/', icon: <span>👤</span> },     
   { name: 'Blog', link: '/blog', icon: <span>📝</span> },
-  { name: 'About', link: '/about', icon: <span>👤</span> },
+  { name: 'Amv', link: '/amv', icon: <span>☯</span> },  
+
 ];
 
 function BodyWrapper({ children }: { children: React.ReactNode }) {
@@ -48,26 +50,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="transition-colors duration-300">
-        <AnimatePresence mode='wait'>
-          {loading ? (
-            <ModernPreloader />
-          ) : (
-            <ColorProvider>
-              <BodyWrapper>
-                <motion.main
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="relative"
-                >
-                  <FloatingNav navItems={navItems} />
-                  {children}
-                  <ColorPicker />
-                </motion.main>
-              </BodyWrapper>
-            </ColorProvider>
-          )}
-        </AnimatePresence>
+        <AudioProvider>
+          <ColorProvider>
+            <AnimatePresence mode='wait'>
+              {loading ? (
+                <ModernPreloader />
+              ) : (
+                <BodyWrapper>
+                  <motion.main
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative"
+                  >
+                    <FloatingNav navItems={navItems} />
+                    {children}
+                    <ColorPicker />
+                  </motion.main>
+                </BodyWrapper>
+              )}
+            </AnimatePresence>
+          </ColorProvider>
+        </AudioProvider>
       </body>
     </html>
   );
